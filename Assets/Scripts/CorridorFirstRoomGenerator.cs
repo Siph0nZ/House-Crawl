@@ -81,7 +81,6 @@ public class CorridorFirstRoomGenerator : MapGenerator
         return deadEnds;
     }
 
-
     private HashSet<Vector2Int> CreateRooms(HashSet<Vector2Int> potentialRoomPositions)
     {
         HashSet<Vector2Int> roomPositions = new HashSet<Vector2Int>(); // room posisions
@@ -121,14 +120,14 @@ public class CorridorFirstRoomGenerator : MapGenerator
         List<Vector2Int> newCorridor = new List<Vector2Int>();
         Vector2Int previousDirection = Vector2Int.zero;
 
-        for (int i = 0; i < corridor.Count; i++)
+        for (int i = 1; i < corridor.Count; i++)
         {
             Vector2Int directionFromCell = corridor[i] - corridor[i - 1];
             if (previousDirection != Vector2Int.zero && directionFromCell != previousDirection)
             {
                 for (int x = -1; x < 2; x++)
                 {
-                    for (int y = -1; x < 2; y++)
+                    for (int y = -1; y < 2; y++)
                     {
                         newCorridor.Add(corridor[i - 1] + new Vector2Int(x, y));
                     }
@@ -142,6 +141,7 @@ public class CorridorFirstRoomGenerator : MapGenerator
                 Vector2Int newCorridorTileOffset = GetDirection90From(directionFromCell); // rotates direction to find nearby cell
                 newCorridor.Add(corridor[i - 1]);
                 newCorridor.Add(corridor[i - 1] + newCorridorTileOffset);
+                previousDirection = directionFromCell; // saves new direction
             }
         }
         return newCorridor;
