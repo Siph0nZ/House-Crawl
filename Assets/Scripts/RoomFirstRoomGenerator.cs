@@ -22,13 +22,23 @@ public class RoomFirstRoomGenerator : MapGenerator
 
     private void CreateRooms()
     {
-        var roomList = ProceduralGeneration.BinarySpacePartitioning(new BoundsInt((Vector3Int)startPosition, new Vector3Int(roomWidth, roomHeight, 0)), minRoomWidth, minRoomHeight);
+        var roomsList = ProceduralGeneration.BinarySpacePartitioning(new BoundsInt((Vector3Int)startPosition, new Vector3Int(roomWidth, roomHeight, 0)), minRoomWidth, minRoomHeight);
 
         HashSet<Vector2Int> floor = new HashSet<Vector2Int>();
-        floor = CreateSimpleRooms(roomList);
+
+        if (randomWalkRooms)
+        {
+            floor = CreateRoomsRandomly(roomsList);
+        }
+        else
+        {
+            floor = CreateSimpleRooms(roomsList);
+        }
+
+        floor = CreateSimpleRooms(roomsList);
 
         List<Vector2Int> roomCenters = new List<Vector2Int>(); // stores center position of rooms
-        foreach (var room in roomList)
+        foreach (var room in roomsList)
         {
             roomCenters.Add((Vector2Int)Vector3Int.RoundToInt(room.center)); 
         }
@@ -38,6 +48,26 @@ public class RoomFirstRoomGenerator : MapGenerator
 
         tilemapVisualizer.PlaceFloorTiles(floor);
         WallGenerator.CreateWalls(floor, tilemapVisualizer);
+    }
+
+    private HashSet<Vector2Int> CreateRoomsRandomly(List<BoundsInt> roomsList)
+    {
+        HashSet<Vector2Int> floor = new HashSet<Vector2Int>();
+        for (int i = 0; i < roomsList.Count; i++)
+        {
+            var roomBounds = roomsList[i]; // select rooms
+            var roomCenter = new Vector2Int(Mathf.RoundToInt(roomBounds.center.x), Mathf.RoundToInt(roomBounds.center.y)); // calculate center points
+            var roomFloor = RunRandomWalk(randomWalkParameters, roomCenter);
+
+            foreach (var position in roomFloor)
+            {
+                if (position.x >= (roomBounds.xMin + offset) && position.x <= (roomBounds.xMax - offset) && position.y >= (roomBounds.yMin + offset) && position.y <= (roomBounds.yMax - offset)) // apply offset
+                {
+                    floor.Add(position); // adds position to floor
+                }
+            }
+        }
+        return floor; 
     }
 
     private HashSet<Vector2Int> ConnectRooms(List<Vector2Int> roomCenters)
@@ -122,7 +152,7 @@ public class RoomFirstRoomGenerator : MapGenerator
         {
             for (int col = offset; col < room.size.x - offset; col++)
             {
-                for (int row = offset; row < room.size.y; row++)
+                for (int row = offset; row < room.size.y - offset; row++)
                 {
                     Vector2Int position = (Vector2Int)room.min + new Vector2Int(col, row);
                     floor.Add(position);
