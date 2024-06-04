@@ -121,7 +121,7 @@ public static class ProceduralGeneration
     }
 }
 
-// generates random direction
+// generates random directions
 public static class Direction2D
 {
     public static List<Vector2Int> cardinalDirectionsList = new List<Vector2Int>
@@ -131,6 +131,28 @@ public static class Direction2D
         new Vector2Int(1, 0), // goes right
         new Vector2Int(0, -1), // goes down
         new Vector2Int(-1, 0) // goes left 
+    };
+
+    public static List<Vector2Int> diagonalDirectionsList = new List<Vector2Int>
+    {
+        // x and y values
+        new Vector2Int(1, 1), // goes up-right 
+        new Vector2Int(1, -1), // goes right-down
+        new Vector2Int(-1, -1), // goes down-left
+        new Vector2Int(-1, 1) // goes left-up 
+    };
+
+    public static List<Vector2Int> eightDirectionsList = new List<Vector2Int>()
+    {
+        // x and y values
+        new Vector2Int(0, 1), // goes up 
+        new Vector2Int(1, 1), // goes up-right 
+        new Vector2Int(1, 0), // goes right
+        new Vector2Int(1, -1), // goes right-down
+        new Vector2Int(0, -1), // goes down
+        new Vector2Int(-1, -1), // goes down-left
+        new Vector2Int(-1, 0), // goes left 
+        new Vector2Int(-1, 1) // goes left-up 
     };
 
     // generates random direction

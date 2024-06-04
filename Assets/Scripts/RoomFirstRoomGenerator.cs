@@ -35,7 +35,7 @@ public class RoomFirstRoomGenerator : MapGenerator
             floor = CreateSimpleRooms(roomsList);
         }
 
-        floor = CreateSimpleRooms(roomsList);
+        floor = CreateSimpleRooms(roomsList); // Keep this for simple rooms
 
         List<Vector2Int> roomCenters = new List<Vector2Int>(); // stores center position of rooms
         foreach (var room in roomsList)
