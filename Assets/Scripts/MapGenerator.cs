@@ -7,7 +7,7 @@ using Random = UnityEngine.Random;
 public class MapGenerator : AbstractGenerator
 {
     [SerializeField]
-    private RandomWalkSO randomWalkParameters;
+    protected RandomWalkSO randomWalkParameters;
     
     protected override void RunProceduralGeneration()
     {
