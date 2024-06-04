@@ -100,7 +100,7 @@ public static class ProceduralGeneration
     {
         var xSplit = Random.Range(1, room.size.x);
         // defines bounds and rooms
-        BoundsInt room1 = new BoundsInt(room.min, new Vector3Int(xSplit, room.min.y, room.min.z));
+        BoundsInt room1 = new BoundsInt(room.min, new Vector3Int(xSplit, room.size.y, room.size.z));
         BoundsInt room2 = new BoundsInt(new Vector3Int(room.min.x + xSplit, room.min.y, room.min.z), new Vector3Int(room.size.x - xSplit, room.size.y, room.size.z));
 
         // enqueue bounded rooms
