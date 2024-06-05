@@ -123,6 +123,21 @@ public class RoomFirstRoomGenerator : MapGenerator
             }
             corridor.Add(position);
         }
+
+        // Extend the corridor by 1 tile in each direction
+        List<Vector2Int> extendedPositions = new List<Vector2Int>();
+        foreach (var pos in corridor)
+        {
+            // Add neighboring positions to extend the corridor
+            extendedPositions.Add(pos + Vector2Int.up);
+            extendedPositions.Add(pos + Vector2Int.down);
+            extendedPositions.Add(pos + Vector2Int.left);
+            extendedPositions.Add(pos + Vector2Int.right);
+        }
+
+    // Add the extended positions to the corridor
+    corridor.UnionWith(extendedPositions);
+
         return corridor; // output of which direction to travel in to get to the destination (room center point)
     }
 
