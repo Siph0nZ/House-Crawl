@@ -15,6 +15,9 @@ public class RoomFirstRoomGenerator : MapGenerator
     [SerializeField]
     private bool randomWalkRooms = false; // check if random walk is enabled
 
+    // PCG Data
+    private Dictionary<Vector2Int, HashSet<Vector2Int>> roomsDictionary = new Dictionary<Vector2Int, HashSet<Vector2Int>>();
+
     protected override void RunProceduralGeneration()
     {
         CreateRooms();
@@ -34,9 +37,6 @@ public class RoomFirstRoomGenerator : MapGenerator
         {
             floor = CreateSimpleRooms(roomsList);
         }
-
-        floor = CreateSimpleRooms(roomsList); // Keep this for simple rooms
-
         List<Vector2Int> roomCenters = new List<Vector2Int>(); // stores center position of rooms
         foreach (var room in roomsList)
         {
@@ -49,6 +49,7 @@ public class RoomFirstRoomGenerator : MapGenerator
         tilemapVisualizer.PlaceFloorTiles(floor);
         WallGenerator.CreateWalls(floor, tilemapVisualizer);
     }
+
 
     private HashSet<Vector2Int> CreateRoomsRandomly(List<BoundsInt> roomsList)
     {
