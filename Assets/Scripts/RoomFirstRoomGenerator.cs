@@ -20,12 +20,12 @@ public class RoomFirstRoomGenerator : MapGenerator
     private GameObject spritePrefab; // Reference to the sprite prefab
     [SerializeField]
     private GameObject currentSprite; // Reference to the current spawned in sprite prefab
-
     [SerializeField]
     private GameObject collectiblePrefab;
     [SerializeField]
     private GameObject currentCollectible;
-
+     
+    private List<GameObject> spawnedCollectibles = new List<GameObject>(); // list to store references of spawned collectibles
 
     // PCG Data
     private Dictionary<Vector2Int, HashSet<Vector2Int>> roomsDictionary = new Dictionary<Vector2Int, HashSet<Vector2Int>>();
@@ -62,25 +62,33 @@ public class RoomFirstRoomGenerator : MapGenerator
         WallGenerator.CreateWalls(floor, tilemapVisualizer);
 
         PlaceRandomSprite(floor); // places sprite
-        PlaceRandomCollectible(floor);
+        PlaceRandomCollectible(floor); // places collectibles
     }
 
     private void PlaceRandomCollectible(HashSet<Vector2Int> floor)
     {   
-        for (int i = 0; i < numItems; i++)
+        List<Vector2Int> floorTiles = new List<Vector2Int>(floor); // convert the HashSet to a List for easy random access
+
+        //if (currentCollectible != null)
+        //{
+            //DestroyImmediate(currentCollectible);
+        //}  
+
+        // destroys existing collectibles
+        foreach (var collectible in spawnedCollectibles) // counts number of collectibles
         {
-            if (currentCollectible != null)
-            {
-                DestroyImmediate(currentCollectible);
-            }   
+            DestroyImmediate(collectible);
         }
+        spawnedCollectibles.Clear(); // clears spawned collectibles before creating new ones
 
         for (int i = 0; i < numItems; i++)
         {   
-            List<Vector2Int> floorTiles = new List<Vector2Int>(floor); // convert the HashSet to a List for easy random access
             Vector2Int randomTile = floorTiles[Random.Range(0, floorTiles.Count)];
-            Vector3 worldPosition = new Vector3(randomTile.x, randomTile.y, 5); // convert tile position to world position
+            Vector3 worldPosition = new Vector3(randomTile.x, randomTile.y, 0); // convert tile position to world position
             currentCollectible = Instantiate(collectiblePrefab, worldPosition, Quaternion.identity);
+
+            spawnedCollectibles.Add(currentCollectible); // adds collectibles to currentCollectible
+
             //List<GameObject> collectableList = new List<GameObject>(collectiblePrefab);
         }
     }
