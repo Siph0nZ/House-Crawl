@@ -14,6 +14,11 @@ public class RoomFirstRoomGenerator : MapGenerator
     private int offset = 1;
     [SerializeField]
     private bool randomWalkRooms = false; // check if random walk is enabled
+    [SerializeField]
+    private GameObject spritePrefab; // Reference to the sprite prefab
+    [SerializeField]
+    private GameObject currentSprite;
+
 
     // PCG Data
     private Dictionary<Vector2Int, HashSet<Vector2Int>> roomsDictionary = new Dictionary<Vector2Int, HashSet<Vector2Int>>();
@@ -48,8 +53,30 @@ public class RoomFirstRoomGenerator : MapGenerator
 
         tilemapVisualizer.PlaceFloorTiles(floor);
         WallGenerator.CreateWalls(floor, tilemapVisualizer);
+
+        PlaceRandomSprite(floor); // places sprite
     }
 
+    private void PlaceRandomSprite(HashSet<Vector2Int> floor)
+    {
+
+        if (currentSprite != null)
+        {
+            DestroyImmediate(currentSprite);
+        }
+        
+        // Convert the HashSet to a List for easy random access
+        List<Vector2Int> floorTiles = new List<Vector2Int>(floor);
+
+        // Randomly select a tile from the floor
+        Vector2Int randomTile = floorTiles[Random.Range(0, floorTiles.Count)];
+
+        // Convert tile position to world position (adjust as necessary)
+        Vector3 worldPosition = new Vector3(randomTile.x, randomTile.y, 0);
+
+        // Instantiate the sprite at the selected position and store the reference
+        currentSprite = Instantiate(spritePrefab, worldPosition, Quaternion.identity);
+    }
 
     private HashSet<Vector2Int> CreateRoomsRandomly(List<BoundsInt> roomsList)
     {
