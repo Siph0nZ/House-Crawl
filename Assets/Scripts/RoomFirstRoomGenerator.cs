@@ -65,16 +65,12 @@ public class RoomFirstRoomGenerator : MapGenerator
             DestroyImmediate(currentSprite);
         }
         
-        // Convert the HashSet to a List for easy random access
-        List<Vector2Int> floorTiles = new List<Vector2Int>(floor);
-
-        // Randomly select a tile from the floor
+        List<Vector2Int> floorTiles = new List<Vector2Int>(floor); // convert the HashSet to a List for easy random access
         Vector2Int randomTile = floorTiles[Random.Range(0, floorTiles.Count)];
 
-        // Convert tile position to world position (adjust as necessary)
-        Vector3 worldPosition = new Vector3(randomTile.x, randomTile.y, 0);
+        Vector3 worldPosition = new Vector3(randomTile.x, randomTile.y, 0); // convert tile position to world position
 
-        // Instantiate the sprite at the selected position and store the reference
+        // instantiate the sprite at the selected position and store the reference
         currentSprite = Instantiate(spritePrefab, worldPosition, Quaternion.identity);
     }
 
