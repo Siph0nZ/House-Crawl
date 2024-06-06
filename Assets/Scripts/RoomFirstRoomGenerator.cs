@@ -4,11 +4,13 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class RoomFirstRoomGenerator : MapGenerator
-{
+{   
     [SerializeField]
     private int minRoomWidth = 4, minRoomHeight = 4;
     [SerializeField]
     private int roomWidth = 20, roomHeight = 20;
+    [SerializeField]
+    private int numItems = 10;
     [SerializeField]
     [Range(0, 10)]
     private int offset = 1;
@@ -17,7 +19,12 @@ public class RoomFirstRoomGenerator : MapGenerator
     [SerializeField]
     private GameObject spritePrefab; // Reference to the sprite prefab
     [SerializeField]
-    private GameObject currentSprite;
+    private GameObject currentSprite; // Reference to the current spawned in sprite prefab
+
+    [SerializeField]
+    private GameObject collectiblePrefab;
+    [SerializeField]
+    private GameObject currentCollectible;
 
 
     // PCG Data
@@ -55,6 +62,27 @@ public class RoomFirstRoomGenerator : MapGenerator
         WallGenerator.CreateWalls(floor, tilemapVisualizer);
 
         PlaceRandomSprite(floor); // places sprite
+        PlaceRandomCollectible(floor);
+    }
+
+    private void PlaceRandomCollectible(HashSet<Vector2Int> floor)
+    {   
+        for (int i = 0; i < numItems; i++)
+        {
+            if (currentCollectible != null)
+            {
+                DestroyImmediate(currentCollectible);
+            }   
+        }
+
+        for (int i = 0; i < numItems; i++)
+        {   
+            List<Vector2Int> floorTiles = new List<Vector2Int>(floor); // convert the HashSet to a List for easy random access
+            Vector2Int randomTile = floorTiles[Random.Range(0, floorTiles.Count)];
+            Vector3 worldPosition = new Vector3(randomTile.x, randomTile.y, 5); // convert tile position to world position
+            currentCollectible = Instantiate(collectiblePrefab, worldPosition, Quaternion.identity);
+            //List<GameObject> collectableList = new List<GameObject>(collectiblePrefab);
+        }
     }
 
     private void PlaceRandomSprite(HashSet<Vector2Int> floor)
