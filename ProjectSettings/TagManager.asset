@@ -46,6 +46,6 @@ TagManager:
   - name: Top Layer
     uniqueID: 2995646227
     locked: 0
-  - name: RenderTexture
-    uniqueID: 1040587615
+  - name: Light
+    uniqueID: 1754494641
     locked: 0
