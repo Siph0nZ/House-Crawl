@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Walls
+  - Floors
   layers:
   - Default
   - TransparentFX
@@ -44,4 +45,7 @@ TagManager:
     locked: 0
   - name: Top Layer
     uniqueID: 2995646227
+    locked: 0
+  - name: RenderTexture
+    uniqueID: 1040587615
     locked: 0
