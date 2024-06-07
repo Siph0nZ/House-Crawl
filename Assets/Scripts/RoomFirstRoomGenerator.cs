@@ -30,6 +30,13 @@ public class RoomFirstRoomGenerator : MapGenerator
     // PCG Data
     private Dictionary<Vector2Int, HashSet<Vector2Int>> roomsDictionary = new Dictionary<Vector2Int, HashSet<Vector2Int>>();
 
+    // generates room when pressed play on menu scene
+    private void Start()
+    {
+        tilemapVisualizer.ClearFloor();
+        RunProceduralGeneration();
+    }
+
     protected override void RunProceduralGeneration()
     {
         CreateRooms();
