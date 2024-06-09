@@ -76,12 +76,6 @@ public class RoomFirstRoomGenerator : MapGenerator
     {   
         List<Vector2Int> floorTiles = new List<Vector2Int>(floor); // convert the HashSet to a List for easy random access
 
-        //if (currentCollectible != null)
-        //{
-            //DestroyImmediate(currentCollectible);
-        //}  
-
-        // destroys existing collectibles
         foreach (var collectible in spawnedCollectibles) // counts number of collectibles
         {
             DestroyImmediate(collectible);
@@ -94,27 +88,28 @@ public class RoomFirstRoomGenerator : MapGenerator
             Vector3 worldPosition = new Vector3(randomTile.x, randomTile.y, 0); // convert tile position to world position
             currentCollectible = Instantiate(collectiblePrefab, worldPosition, Quaternion.identity);
 
-            spawnedCollectibles.Add(currentCollectible); // adds collectibles to currentCollectible
+            Rigidbody2D rb = currentCollectible.AddComponent<Rigidbody2D>();
+            //rb.bodyType = RigidbodyType2D.Kinematic; // set to Kinematic so it's not affected by physics
+            rb.gravityScale = 0; // set gravity scale to 0 so it's not affected by gravity
 
-            //List<GameObject> collectableList = new List<GameObject>(collectiblePrefab);
+            // adds collision handler script to initialize it
+            SpriteCollisionHandler collisionHandler = currentCollectible.AddComponent<SpriteCollisionHandler>();
+            collisionHandler.Initialize(this, floor);
+
+            spawnedCollectibles.Add(currentCollectible); // adds collectibles to currentCollectible
         }
     }
 
     private void PlaceRandomSprite(HashSet<Vector2Int> floor)
     {
-
         if (currentSprite != null)
         {
             DestroyImmediate(currentSprite);
         }
-        
         List<Vector2Int> floorTiles = new List<Vector2Int>(floor); // convert the HashSet to a List for easy random access
-        Vector2Int randomTile = floorTiles[Random.Range(0, floorTiles.Count)];
-
+        Vector2Int randomTile = floorTiles[Random.Range(0, floorTiles.Count)]; // select a random tile from the floor
         Vector3 worldPosition = new Vector3(randomTile.x, randomTile.y, 0); // convert tile position to world position
-
-        // instantiate the sprite at the selected position and store the reference
-        currentSprite = Instantiate(spritePrefab, worldPosition, Quaternion.identity);
+        currentSprite = Instantiate(spritePrefab, worldPosition, Quaternion.identity); // instantiate the sprite at the selected position and store the reference
     }
 
     private HashSet<Vector2Int> CreateRoomsRandomly(List<BoundsInt> roomsList)
