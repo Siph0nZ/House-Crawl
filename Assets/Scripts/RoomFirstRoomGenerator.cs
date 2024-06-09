@@ -82,20 +82,21 @@ public class RoomFirstRoomGenerator : MapGenerator
         }
         spawnedCollectibles.Clear(); // clears spawned collectibles before creating new ones
 
+        // spawning
         for (int i = 0; i < numItems; i++)
         {   
             Vector2Int randomTile = floorTiles[Random.Range(0, floorTiles.Count)];
             Vector3 worldPosition = new Vector3(randomTile.x, randomTile.y, 0); // convert tile position to world position
             currentCollectible = Instantiate(collectiblePrefab, worldPosition, Quaternion.identity);
 
-            Rigidbody2D rb = currentCollectible.AddComponent<Rigidbody2D>();
+            ///Rigidbody2D rb = currentCollectible.AddComponent<Rigidbody2D>();
             //rb.bodyType = RigidbodyType2D.Kinematic; // set to Kinematic so it's not affected by physics
-            rb.gravityScale = 0; // set gravity scale to 0 so it's not affected by gravity
+            //rb.gravityScale = 0; // set gravity scale to 0 so it's not affected by gravity
 
             // adds collision handler script to initialize it
             SpriteCollisionHandler collisionHandler = currentCollectible.AddComponent<SpriteCollisionHandler>();
-            collisionHandler.Initialize(this, floor);
-
+            collisionHandler.Initialize(this, floor); // initializes the collision handler
+            
             spawnedCollectibles.Add(currentCollectible); // adds collectibles to currentCollectible
         }
     }

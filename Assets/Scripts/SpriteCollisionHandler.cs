@@ -10,7 +10,6 @@ public class SpriteCollisionHandler : MonoBehaviour
     {
         roomGenerator = generator;
         floorTiles = floor;
-
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -27,7 +26,6 @@ public class SpriteCollisionHandler : MonoBehaviour
         List<Vector2Int> floorTileList = new List<Vector2Int>(floorTiles);
         Vector2Int randomTile = floorTileList[Random.Range(0, floorTileList.Count)];
         Vector3 worldPosition = new Vector3(randomTile.x, randomTile.y, 0); // Convert tile position to world position
-
         transform.position = worldPosition;
     }
 }
