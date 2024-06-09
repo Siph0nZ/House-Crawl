@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4739273329578730344}
   - component: {fileID: 8393300337624452413}
   - component: {fileID: 4198366078640681721}
-  - component: {fileID: 7719405178861327853}
+  - component: {fileID: -2916457739696597600}
   m_Layer: 0
   m_Name: paper 1 1
   m_TagString: Untagged
@@ -134,7 +134,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 7
---- !u!114 &7719405178861327853
+--- !u!114 &-2916457739696597600
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
