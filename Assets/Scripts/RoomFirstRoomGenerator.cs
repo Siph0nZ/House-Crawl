@@ -4,6 +4,9 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 using UnityEngine.SceneManagement;
 
+// Add generation of AI enemy's that follow you around the map
+// Idea - Weeping Angels + Time out system
+
 public class RoomFirstRoomGenerator : MapGenerator
 {   
     [SerializeField]

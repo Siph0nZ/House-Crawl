@@ -4,6 +4,9 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using System;
 
+// Make random objects spawn for more world building
+// - Lanterns (Remote light source), Random home objects (TV's, couches and etc...)
+
 public class TilemapVisualizer : MonoBehaviour
 {
     [SerializeField]
