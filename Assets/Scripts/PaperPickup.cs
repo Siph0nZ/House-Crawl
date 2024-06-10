@@ -30,22 +30,16 @@ public class PaperPickup : MonoBehaviour
 
             if (ScoreManager.instance.score == 10)
             {
-                EndGame(); 
+                StartCoroutine(EndScene());
             }
         }
-    }
-
-    public void EndGame()
-    {
-        StartCoroutine(EndScene());
     }
 
     public IEnumerator EndScene()
     {
         fade.FadeIn();
-        Debug.Log("Fading in.");
-        yield return new WaitForSeconds(1);
-        Debug.Log("Loading End Screen scene.");
+        new WaitForSeconds(1);
         SceneManager.LoadScene("End Screen");
+        yield return new WaitForSeconds(1);
     }
 }
