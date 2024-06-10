@@ -17,6 +17,18 @@ public class MainMenu : MonoBehaviour
         StartCoroutine(ChangeScene());
     }
 
+    public void Help()
+    {
+        StartCoroutine(ChangeSceneHelp());
+    }
+
+    public IEnumerator ChangeSceneHelp()
+    {
+        fade.FadeIn();
+        yield return new WaitForSeconds(1);
+        SceneManager.LoadScene("HelpScene");
+    }
+
     public IEnumerator ChangeScene()
     {
         fade.FadeIn();
