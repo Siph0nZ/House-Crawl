@@ -37,8 +37,14 @@ public class PaperPickup : MonoBehaviour
 
     public IEnumerator EndScene()
     {
+        // works
+        //fade.FadeIn();
+        //new WaitForSeconds(1);
+        //SceneManager.LoadScene("End Screen");
+        //yield return new WaitForSeconds(1);
+
+        // no work
         fade.FadeIn();
-        new WaitForSeconds(1);
         SceneManager.LoadScene("End Screen");
         yield return new WaitForSeconds(1);
     }

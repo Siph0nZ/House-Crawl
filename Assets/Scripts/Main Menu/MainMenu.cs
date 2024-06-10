@@ -12,11 +12,7 @@ public class MainMenu : MonoBehaviour
         fade = FindObjectOfType<FadeInOut>();
     }
 
-    public void PlayGame()
-    {
-        StartCoroutine(ChangeScene());
-    }
-
+    // Help Scene
     public void Help()
     {
         StartCoroutine(ChangeSceneHelp());
@@ -27,6 +23,12 @@ public class MainMenu : MonoBehaviour
         fade.FadeIn();
         yield return new WaitForSeconds(1);
         SceneManager.LoadScene("HelpScene");
+    }
+
+    // Level 1 Scene 
+    public void PlayGame()
+    {
+        StartCoroutine(ChangeScene());
     }
 
     public IEnumerator ChangeScene()
