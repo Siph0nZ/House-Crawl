@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 using UnityEngine.SceneManagement;
+using UnityEngine.AI;
+using NavMeshPlus.Components;
+//using Unity.AI.Navigation;
+using UnityEditor;
+
 
 // Add generation of AI enemy's that follow you around the map
 // Idea - Weeping Angels + Time out system
@@ -45,12 +50,14 @@ public class RoomFirstRoomGenerator : MapGenerator
 
     // PCG Data
     private Dictionary<Vector2Int, HashSet<Vector2Int>> roomsDictionary = new Dictionary<Vector2Int, HashSet<Vector2Int>>();
+    [SerializeField] public NavMeshSurface surface;
 
     // generates room when pressed play on menu scene
     private void Start()
-    {
+    {   
         tilemapVisualizer.ClearFloor();
         RunProceduralGeneration();
+        surface.BuildNavMeshAsync();
     }
 
     protected override void RunProceduralGeneration()
