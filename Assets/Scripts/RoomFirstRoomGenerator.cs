@@ -21,7 +21,7 @@ public class RoomFirstRoomGenerator : MapGenerator
     [SerializeField]
     private int numItems = 10;
     [SerializeField]
-    private int numEnemies = 5;
+    private int numEnemies = 2;
     [SerializeField]
     [Range(0, 10)]
     private int offset = 1;

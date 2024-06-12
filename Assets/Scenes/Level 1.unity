@@ -443,8 +443,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 783, y: 466}
-  m_SizeDelta: {x: 284.398, y: 63.4097}
+  m_AnchoredPosition: {x: 418, y: 288}
+  m_SizeDelta: {x: 267.4517, y: 56.8919}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &548680250
 MonoBehaviour:
@@ -51944,7 +51944,7 @@ MonoBehaviour:
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.5
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1
+  m_Intensity: 0
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
   m_ApplyToSortingLayers: 00000000
