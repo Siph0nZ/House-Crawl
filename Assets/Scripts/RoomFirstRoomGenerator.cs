@@ -16,19 +16,31 @@ public class RoomFirstRoomGenerator : MapGenerator
     [SerializeField]
     private int numItems = 10;
     [SerializeField]
+    private int numEnemies = 5;
+    [SerializeField]
     [Range(0, 10)]
     private int offset = 1;
     [SerializeField]
     private bool randomWalkRooms = false; // check if random walk is enabled
+
+    // player sprite
     [SerializeField]
     private GameObject spritePrefab; // Reference to the sprite prefab
     [SerializeField]
     private GameObject currentSprite; // Reference to the current spawned in sprite prefab
+
+    // enemy
+    [SerializeField]
+    private GameObject enemyPrefab;
+    [SerializeField]
+    private GameObject currentEnemy;
+    private List<GameObject> spawnedEnemies = new List<GameObject>(); // list to store references of spawned collectibles
+
+    // collectibles
     [SerializeField]
     private GameObject collectiblePrefab;
     [SerializeField]
     private GameObject currentCollectible;
-     
     private List<GameObject> spawnedCollectibles = new List<GameObject>(); // list to store references of spawned collectibles
 
     // PCG Data
@@ -73,6 +85,7 @@ public class RoomFirstRoomGenerator : MapGenerator
         WallGenerator.CreateWalls(floor, tilemapVisualizer);
 
         PlaceRandomSprite(floor); // places sprite
+        PlaceRandomEnemy(floor); // places enemy
         PlaceRandomCollectible(floor); // places collectibles
     }
 
@@ -93,15 +106,30 @@ public class RoomFirstRoomGenerator : MapGenerator
             Vector3 worldPosition = new Vector3(randomTile.x, randomTile.y, 0); // convert tile position to world position
             currentCollectible = Instantiate(collectiblePrefab, worldPosition, Quaternion.identity);
 
-            ///Rigidbody2D rb = currentCollectible.AddComponent<Rigidbody2D>();
-            //rb.bodyType = RigidbodyType2D.Kinematic; // set to Kinematic so it's not affected by physics
-            //rb.gravityScale = 0; // set gravity scale to 0 so it's not affected by gravity
-
             // adds collision handler script to initialize it
             SpriteCollisionHandler collisionHandler = currentCollectible.AddComponent<SpriteCollisionHandler>();
             collisionHandler.Initialize(this, floor); // initializes the collision handler
             
             spawnedCollectibles.Add(currentCollectible); // adds collectibles to currentCollectible
+        }
+    }
+
+    private void PlaceRandomEnemy(HashSet<Vector2Int> floor)
+    {
+        foreach (var enemy in spawnedEnemies)
+        {
+            DestroyImmediate(enemy);
+        }
+        spawnedEnemies.Clear(); // clears spawned collectibles before creating new ones
+
+        // spawning
+        for (int i = 0; i < numEnemies; i++)
+        {
+            List<Vector2Int> floorTiles = new List<Vector2Int>(floor); // convert the HashSet to a List for easy random access
+            Vector2Int randomTile = floorTiles[Random.Range(0, floorTiles.Count)]; // select a random tile from the floor
+            Vector3 worldPosition = new Vector3(randomTile.x, randomTile.y, 0); // convert tile position to world position
+            currentEnemy = Instantiate(enemyPrefab, worldPosition, Quaternion.identity); // instantiate the enemy at the selected position and store the reference
+            spawnedEnemies.Add(currentEnemy); // adds enemies to currentEnemies
         }
     }
 
@@ -111,6 +139,7 @@ public class RoomFirstRoomGenerator : MapGenerator
         {
             DestroyImmediate(currentSprite);
         }
+ 
         List<Vector2Int> floorTiles = new List<Vector2Int>(floor); // convert the HashSet to a List for easy random access
         Vector2Int randomTile = floorTiles[Random.Range(0, floorTiles.Count)]; // select a random tile from the floor
         Vector3 worldPosition = new Vector3(randomTile.x, randomTile.y, 0); // convert tile position to world position
