@@ -13,10 +13,14 @@ public class EnemyScript : MonoBehaviour
     [SerializeField] private float minDistance;
     [SerializeField] private float stopDistance;
     FadeInOut fade;
+    AudioSource audioSource;
+    bool isFound = false;
+
 
     private void Start()
     {   
         fade = FindObjectOfType<FadeInOut>();
+        audioSource = GetComponent<AudioSource>();
         player = GameObject.FindWithTag("Player").transform;
         agent = GetComponent<NavMeshAgent>();
         agent.updateRotation = false;
@@ -35,10 +39,8 @@ public class EnemyScript : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D other)
     {   
-        Debug.Log("Touched");
         if (other.gameObject.CompareTag("Player"))
         {   
-            Debug.Log("Touched");
             StartCoroutine(DeathScene());
         }
     }
@@ -56,11 +58,18 @@ public class EnemyScript : MonoBehaviour
         if (other.tag == "Light")
         {
             aiSpeed = 0;
+
+            if (!isFound)
+            {
+                audioSource.Play();
+                isFound = true;
+            }
         }
     }
 
     void OnTriggerExit2D(Collider2D other)
     {
         aiSpeed = 3;
+        audioSource.Stop();
     }
 }

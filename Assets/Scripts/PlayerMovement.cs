@@ -8,11 +8,14 @@ public class PlayerMovement : MonoBehaviour
     float moveH;
     float moveV;
     Rigidbody2D rb;
+    AudioSource audioSource;
+    bool isMoving = false;
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -20,7 +23,20 @@ public class PlayerMovement : MonoBehaviour
     {
         moveH = Input.GetAxis("Horizontal");
         moveV = Input.GetAxis("Vertical");
-
         rb.velocity = new Vector2(moveH * speed, moveV * speed);
+
+        if (moveH != 0 || moveV != 0)
+        {
+            if (!isMoving)
+            {
+                audioSource.Play();
+                isMoving = true;
+            }
+        }
+        else
+        {
+            audioSource.Stop();
+            isMoving = false;
+        }
     }
 }

@@ -34,7 +34,7 @@ public class MainMenu : MonoBehaviour
     public IEnumerator ChangeScene()
     {
         fade.FadeIn();
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(7);
         SceneManager.LoadScene("Level 1");
     }
 }

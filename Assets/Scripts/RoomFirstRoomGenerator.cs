@@ -16,12 +16,16 @@ public class RoomFirstRoomGenerator : MapGenerator
 {   
     [SerializeField]
     private int minRoomWidth = 4, minRoomHeight = 4;
+
     [SerializeField]
     private int roomWidth = 20, roomHeight = 20;
+
     [SerializeField]
     private int numItems = 10;
+
     [SerializeField]
-    private int numEnemies = 2;
+    private int numEnemies;
+
     [SerializeField]
     [Range(0, 10)]
     private int offset = 1;
@@ -123,6 +127,7 @@ public class RoomFirstRoomGenerator : MapGenerator
     private void PlaceRandomEnemy(HashSet<Vector2Int> floor)
     {
         List<Vector2Int> floorTiles = new List<Vector2Int>(floor); // convert the HashSet to a List for easy random access
+        
         foreach (var enemy in spawnedEnemies)
         {
             DestroyImmediate(enemy);
