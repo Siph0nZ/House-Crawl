@@ -116,13 +116,13 @@ public class RoomFirstRoomGenerator : MapGenerator
             // adds collision handler script to initialize it
             SpriteCollisionHandler collisionHandler = currentCollectible.AddComponent<SpriteCollisionHandler>();
             collisionHandler.Initialize(this, floor); // initializes the collision handler
-            
             spawnedCollectibles.Add(currentCollectible); // adds collectibles to currentCollectible
         }
     }
 
     private void PlaceRandomEnemy(HashSet<Vector2Int> floor)
     {
+        List<Vector2Int> floorTiles = new List<Vector2Int>(floor); // convert the HashSet to a List for easy random access
         foreach (var enemy in spawnedEnemies)
         {
             DestroyImmediate(enemy);
@@ -132,7 +132,6 @@ public class RoomFirstRoomGenerator : MapGenerator
         // spawning
         for (int i = 0; i < numEnemies; i++)
         {
-            List<Vector2Int> floorTiles = new List<Vector2Int>(floor); // convert the HashSet to a List for easy random access
             Vector2Int randomTile = floorTiles[Random.Range(0, floorTiles.Count)]; // select a random tile from the floor
             Vector3 worldPosition = new Vector3(randomTile.x, randomTile.y, 0); // convert tile position to world position
             currentEnemy = Instantiate(enemyPrefab, worldPosition, Quaternion.identity); // instantiate the enemy at the selected position and store the reference

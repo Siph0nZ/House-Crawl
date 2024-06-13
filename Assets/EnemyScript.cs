@@ -7,8 +7,9 @@ public class EnemyScript : MonoBehaviour
 {   
     [SerializeField] Transform player; 
     NavMeshAgent agent;
-    private float aiSpeed;
-    private float distance;
+    private float aiSpeed = 3;
+    [SerializeField] private float minDistance;
+    [SerializeField] private float stopDistance;
 
     private void Start()
     {   
@@ -20,28 +21,24 @@ public class EnemyScript : MonoBehaviour
 
     void Update()
     {   
-        agent.SetDestination(player.position);
+        // follows player based off distance
+        if (Vector3.Distance(player.position, transform.position) < minDistance)
+        {   
+            GetComponent<NavMeshAgent>().speed = aiSpeed;
+            agent.SetDestination(player.position);
+        }
     }
 
-     /*
-    void Update()
+    void OnTriggerStay2D(Collider2D other)
     {
-        distance = Vector2.Distance(transform.position, player.transform.position);
-        Vector2 direction = player.transform.position - transform.position;
-        transform.position = Vector2.MoveTowards(this.transform.position, player.transform.position, aiSpeed * Time.deltaTime);
-    }
-    private void Update()
-    {
-        player.SetDestination(target.position);
+        if (other.tag == "Light")
+        {
+            aiSpeed = 0;
+        }
     }
 
-    public GameObject player;
-    public float aiSpeed;
-    private float distance;
-
-    void Start()
+    void OnTriggerExit2D(Collider2D other)
     {
-        player = GameObject.FindWithTag("Player"); // finds clone with player tag
+        aiSpeed = 3;
     }
-    */
 }
